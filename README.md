@@ -1,0 +1,2 @@
+# Snake
+Traditional minigame Snake.
