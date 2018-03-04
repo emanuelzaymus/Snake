@@ -1,2 +1,2 @@
-# snake.game_component.Snake
-Traditional minigame snake.game_component.Snake.
+# Snake
+Traditional minigame Snake.
