@@ -1,4 +1,4 @@
-package snake.game_component;
+package snake.gamecomponent;
 
 import snake.SnakePanel;
 import snake.C;
@@ -18,8 +18,20 @@ public class Snake {
     }
 
     public void move(int deltaX, int deltaY) {
-        for (SnakeLink link : snakeLinks) {
-            link.step(deltaX, deltaY);
+        int newX = snakeLinks.get(0).getX();
+        int newY = snakeLinks.get(0).getY();
+
+        snakeLinks.get(0).step(deltaX, deltaY);
+
+        int oldX;
+        int oldY;
+
+        for (int i = 1; i < snakeLinks.size(); i++) {
+            oldX = snakeLinks.get(i).getX();
+            oldY = snakeLinks.get(i).getY();
+            snakeLinks.get(i).setPosition(newX, newY);
+            newX = oldX;
+            newY = oldY;
         }
     }
 

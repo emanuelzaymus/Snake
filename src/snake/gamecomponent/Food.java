@@ -1,4 +1,4 @@
-package snake.game_component;
+package snake.gamecomponent;
 
 import java.awt.*;
 

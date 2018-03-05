@@ -1,4 +1,4 @@
-package snake.game_component;
+package snake.gamecomponent;
 
 import snake.C;
 import snake.SnakePanel;
@@ -21,9 +21,19 @@ public class Element extends Component {
         this.color = color;
     }
 
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
     public void draw(Graphics g, Component component) {
         g.setColor(color);
-        g.fillRect(x * C.RESOLUTION + (C.RESOLUTION - width) / 2, y * C.RESOLUTION + (C.RESOLUTION - height) / 2, width, height);
+        g.fillRect(x * C.RESOLUTION + C.OFFSET, y * C.RESOLUTION + C.OFFSET, width, height);
     }
 
     public void addComponent(SnakePanel snakePanel) {
@@ -33,6 +43,11 @@ public class Element extends Component {
     protected void step(int deltaX, int deltaY) {
         x += deltaX;
         y += deltaY;
+    }
+
+    protected void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
 }

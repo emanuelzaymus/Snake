@@ -1,7 +1,7 @@
 package snake;
 
-import snake.game_component.Food;
-import snake.game_component.*;
+import snake.gamecomponent.Food;
+import snake.gamecomponent.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class SnakePanel extends JPanel implements KeyListener {
     public SnakePanel() {
         food = new Food(0, 0, C.ELEMENT_SIZE, C.ELEMENT_SIZE);
         food.addComponent(this);
-        snake = new Snake(5, 5, 3);
+        snake = new Snake(5, 5, 6);
         snake.addComponent(this);
 
         addKeyListener(this);
@@ -65,4 +65,5 @@ public class SnakePanel extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
 }

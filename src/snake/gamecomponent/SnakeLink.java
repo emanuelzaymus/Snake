@@ -1,4 +1,4 @@
-package snake.game_component;
+package snake.gamecomponent;
 
 import java.awt.*;
 
@@ -11,5 +11,10 @@ public class SnakeLink extends Element {
     @Override
     protected void step(int deltaX, int deltaY) {
         super.step(deltaX, deltaY);
+    }
+
+    @Override
+    protected void setPosition(int x, int y) {
+        super.setPosition(x, y);
     }
 }
