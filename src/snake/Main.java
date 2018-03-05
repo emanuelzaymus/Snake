@@ -22,13 +22,15 @@ public class Main {
 
 /*
 * TODO LIST:
+* - bug (2 arrows at the same time)
+*
+* - levels/types of the game = wall element
+* - increasing speed
 * - head of the snake
 * - design of snakes link
-* - more food (good or bad)
-* - increasing speed
 * - collection points
 * - counter of pints
-* - levels/types of the game = wall element
+* - more food (good or bad)
 * - icone
 *
 *

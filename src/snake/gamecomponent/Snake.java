@@ -46,7 +46,7 @@ public class Snake {
             oldX = snakeLinks.get(i).getX();
             oldY = snakeLinks.get(i).getY();
             snakeLinks.get(i).setPosition(newX, newY);
-            if (oldX == link0x && oldY == link0y) {
+            if (newX == link0x && newY == link0y) {
                 isAline = false;
                 System.out.println("lost"); //todo
             }

@@ -72,7 +72,11 @@ public class SnakePanel extends JPanel implements KeyListener {
             } else if (!running && !lost) {     //play after pause
                 running = true;
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_UP && (deltaX != 0 && deltaY != 1)) {
+        }
+        if (!running) {
+            return;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_UP && (deltaX != 0 && deltaY != 1)) {
             deltaX = 0;
             deltaY = -1;
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN && (deltaX != 0 && deltaY != -1)) {
