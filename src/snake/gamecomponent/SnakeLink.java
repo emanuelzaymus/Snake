@@ -1,6 +1,6 @@
 package snake.gamecomponent;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class SnakeLink extends Element {
 
@@ -17,4 +17,5 @@ public class SnakeLink extends Element {
     protected void setPosition(int x, int y) {
         super.setPosition(x, y);
     }
+
 }

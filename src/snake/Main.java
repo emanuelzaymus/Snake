@@ -1,6 +1,6 @@
 package snake;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class Main {
 
@@ -19,3 +19,17 @@ public class Main {
     }
 
 }
+
+/*
+* TODO LIST:
+* - head of the snake
+* - design of snakes link
+* - more food (good or bad)
+* - increasing speed
+* - collection points
+* - counter of pints
+* - levels/types of the game = wall element
+* - icone
+*
+*
+* */

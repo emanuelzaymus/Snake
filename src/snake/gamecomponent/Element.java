@@ -3,15 +3,17 @@ package snake.gamecomponent;
 import snake.C;
 import snake.SnakePanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 
 public class Element extends Component {
 
-    private int y;
-    private int x;
-    private int width;
-    private int height;
-    private Color color;
+    protected int y;
+    protected int x;
+    protected int width;
+    protected int height;
+    protected Color color;
 
     public Element(int x, int y, int width, int height, Color color) {
         this.x = x;
@@ -31,7 +33,7 @@ public class Element extends Component {
         return x;
     }
 
-    public void draw(Graphics g, Component component) {
+    public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(x * C.RESOLUTION + C.OFFSET, y * C.RESOLUTION + C.OFFSET, width, height);
     }

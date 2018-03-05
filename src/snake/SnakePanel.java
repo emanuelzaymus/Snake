@@ -1,40 +1,59 @@
 package snake;
 
 import snake.gamecomponent.Food;
-import snake.gamecomponent.*;
+import snake.gamecomponent.Snake;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class SnakePanel extends JPanel implements KeyListener {
 
-    Thread thread;
-    Animate animate;
+    private Animate animate = new Animate(this);
+    private Thread thread = new Thread(animate);
 
-    Snake snake;
-    Food food;
+    private Snake snake;
+    private Food food;
+
+    private int deltaX;
+    private int deltaY;
+
+    private boolean running = false;
+    private boolean lost = false;
 
     public SnakePanel() {
-        food = new Food(0, 0, C.ELEMENT_SIZE, C.ELEMENT_SIZE);
-        food.addComponent(this);
-        snake = new Snake(5, 5, 6);
-        snake.addComponent(this);
+        this.restart();
+        thread.start();
 
         addKeyListener(this);
         setFocusable(true);
     }
 
+    private void restart() {
+        snake = new Snake(8, 5, 6);
+        snake.addComponent(this);
+        food = new Food(0, 0, C.ELEMENT_SIZE, C.ELEMENT_SIZE);
+        food.reset(snake.getSnakeLinks());
+        food.addComponent(this);
+
+        deltaX = 1;
+        deltaY = 0;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        food.draw(g, this);
-        snake.draw(g, this);
+        food.draw(g);
+        snake.draw(g);
     }
 
     public void update() {
-        super.repaint();
+        if (running) {
+            running = snake.move(deltaX, deltaY, food);
+            lost = !running;
+            super.repaint();
+        }
     }
 
     @Override
@@ -44,21 +63,27 @@ public class SnakePanel extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            animate = new Animate(this);
-            thread = new Thread(animate);
-            thread.start();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            snake.move(0, -1);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            snake.move(0, 1);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            snake.move(1, 0);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            snake.move(-1,0);
+            if (running) {                      //pause
+                running = false;
+            } else if (!running && lost) {      //new game
+                this.restart();
+                running = true;
+                lost = false;
+            } else if (!running && !lost) {     //play after pause
+                running = true;
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_UP && (deltaX != 0 && deltaY != 1)) {
+            deltaX = 0;
+            deltaY = -1;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN && (deltaX != 0 && deltaY != -1)) {
+            deltaX = 0;
+            deltaY = 1;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && (deltaX != -1 && deltaY != 0)) {
+            deltaX = 1;
+            deltaY = 0;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT && (deltaX != 1 && deltaY != 0)) {
+            deltaX = -1;
+            deltaY = 0;
         }
     }
 
