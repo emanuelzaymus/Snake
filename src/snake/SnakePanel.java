@@ -18,6 +18,7 @@ public class SnakePanel extends JPanel implements KeyListener {
 
     private int deltaX;
     private int deltaY;
+    private boolean moved = true;
 
     private boolean running = false;
     private boolean lost = false;
@@ -53,6 +54,7 @@ public class SnakePanel extends JPanel implements KeyListener {
             running = snake.move(deltaX, deltaY, food);
             lost = !running;
             super.repaint();
+            moved = true;
         }
     }
 
@@ -73,7 +75,7 @@ public class SnakePanel extends JPanel implements KeyListener {
                 running = true;
             }
         }
-        if (!running) {
+        if (!running || !moved) {
             return;
         }
         if (e.getKeyCode() == KeyEvent.VK_UP && (deltaX != 0 && deltaY != 1)) {
@@ -89,6 +91,7 @@ public class SnakePanel extends JPanel implements KeyListener {
             deltaX = -1;
             deltaY = 0;
         }
+        moved = false;
     }
 
     @Override
