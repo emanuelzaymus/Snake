@@ -16,9 +16,8 @@ public class SnakePanel extends JPanel implements KeyListener {
     private Snake snake;
     private Food food;
 
-    private int deltaX;
-    private int deltaY;
     private boolean moved = true;
+    private Direction direct;
 
     private boolean running = false;
     private boolean lost = false;
@@ -32,14 +31,12 @@ public class SnakePanel extends JPanel implements KeyListener {
     }
 
     private void restart() {
-        snake = new Snake(8, 5, 6);
+        snake = new Snake(8, 5, 6, Direction.RIGHT);
+        direct = Direction.RIGHT;
         snake.addComponent(this);
         food = new Food(0, 0, C.ELEMENT_SIZE, C.ELEMENT_SIZE);
         food.reset(snake.getSnakeLinks());
         food.addComponent(this);
-
-        deltaX = 1;
-        deltaY = 0;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class SnakePanel extends JPanel implements KeyListener {
 
     public void update() {
         if (running) {
-            running = snake.move(deltaX, deltaY, food);
+            running = snake.move(direct, food);
             lost = !running;
             super.repaint();
             moved = true;
@@ -78,18 +75,14 @@ public class SnakePanel extends JPanel implements KeyListener {
         if (!running || !moved) {
             return;
         }
-        if (e.getKeyCode() == KeyEvent.VK_UP && (deltaX != 0 && deltaY != 1)) {
-            deltaX = 0;
-            deltaY = -1;
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN && (deltaX != 0 && deltaY != -1)) {
-            deltaX = 0;
-            deltaY = 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && (deltaX != -1 && deltaY != 0)) {
-            deltaX = 1;
-            deltaY = 0;
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT && (deltaX != 1 && deltaY != 0)) {
-            deltaX = -1;
-            deltaY = 0;
+        if (e.getKeyCode() == KeyEvent.VK_UP && direct != Direction.DOWN) {
+            direct = Direction.UP;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN && direct != Direction.UP) {
+            direct = Direction.DOWN;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && direct != Direction.LEFT) {
+            direct = Direction.RIGHT;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT && direct != Direction.RIGHT) {
+            direct = Direction.LEFT;
         }
         moved = false;
     }

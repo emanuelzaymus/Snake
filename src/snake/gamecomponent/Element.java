@@ -7,20 +7,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
-public class Element extends Component {
+public abstract class Element extends Component {
 
     protected int y;
     protected int x;
     protected int width;
     protected int height;
-    protected Color color;
 
-    public Element(int x, int y, int width, int height, Color color) {
+    public Element(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = color;
     }
 
     @Override
@@ -33,10 +31,7 @@ public class Element extends Component {
         return x;
     }
 
-    public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillRect(x * C.RESOLUTION + C.OFFSET, y * C.RESOLUTION + C.OFFSET, width, height);
-    }
+    public abstract void draw(Graphics g);
 
     public void addComponent(SnakePanel snakePanel) {
         snakePanel.add(this);

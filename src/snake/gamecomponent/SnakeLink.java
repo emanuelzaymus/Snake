@@ -1,11 +1,23 @@
 package snake.gamecomponent;
 
-import java.awt.Color;
+import snake.C;
+
+import java.awt.*;
 
 public class SnakeLink extends Element {
 
+    protected Color color = Color.green;
+    protected final int linkArc = 10;
+
     public SnakeLink(int x, int y, int width, int height) {
-        super(x, y, width, height, Color.GREEN);
+        super(x, y, width, height);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(color);
+//        g.fillRect(x  * C.RESOLUTION + C.OFFSET, y * C.RESOLUTION + C.OFFSET, width, height);
+        g.fillRoundRect(x * C.RESOLUTION + C.OFFSET, y * C.RESOLUTION + C.OFFSET, width, height, linkArc, linkArc);
     }
 
     @Override
