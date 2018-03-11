@@ -50,9 +50,9 @@ public class SnakePanel extends JPanel implements KeyListener {
         if (running) {
             running = snake.move(direct, food);
             lost = !running;
-            super.repaint();
             moved = true;
         }
+        super.repaint();
     }
 
     @Override

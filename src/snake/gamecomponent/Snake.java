@@ -3,20 +3,20 @@ package snake.gamecomponent;
 import snake.Direction;
 import snake.SnakePanel;
 import snake.C;
-import sun.security.util.Length;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Snake {
 
-    //    ArrayList<SnakeLink> snakeLinks;
     LinkedList<SnakeLink> snakeLinks;
+    private boolean isVisible = true;
+    private boolean isAlive = true;
+    private int blinkCount = 0;
 
     public Snake(int x, int y, int length, Direction direct) {
-//        snakeLinks = new ArrayList<>();
         snakeLinks = new LinkedList<>();
         snakeLinks.add(new SnakeHead(x, y, C.ELEMENT_SIZE, C.ELEMENT_SIZE, direct));
         for (int i = 1; i < length - 1; i++) {
@@ -25,20 +25,17 @@ public class Snake {
         snakeLinks.add(new SnakeTail(x - length + 1, y, C.ELEMENT_SIZE, C.ELEMENT_SIZE, direct));
     }
 
-    //    public ArrayList<SnakeLink> getSnakeLinks() {
     public LinkedList<SnakeLink> getSnakeLinks() {
         return snakeLinks;
     }
 
     public boolean move(Direction direct, Food food) {
-        boolean isAline = true;
         int deltaX = direct.getX();
         int deltaY = direct.getY();
-//        SnakeLink snakeLink0 = snakeLinks.get(0);
-        SnakeLink snakeLink0 = snakeLinks.getFirst();
-        int newX = snakeLink0.getX();
-        int newY = snakeLink0.getY();
-        ((SnakeHead) snakeLink0).setDirection(direct);
+        SnakeLink head = snakeLinks.getFirst();
+        int newX = head.getX();
+        int newY = head.getY();
+        ((SnakeHead) head).setDirection(direct);
 
         if (newX + deltaX < 0) {
             deltaX += C.MAX_X;
@@ -49,24 +46,12 @@ public class Snake {
         } else if (newY + deltaY >= C.MAX_Y) {
             deltaY -= C.MAX_Y;
         }
-        snakeLink0.step(deltaX, deltaY);
-        int link0x = snakeLink0.getX();
-        int link0y = snakeLink0.getY();
+        head.step(deltaX, deltaY);
+        int head0x = head.getX();
+        int head0y = head.getY();
 
         int oldX;
         int oldY;
-
-//        for (int i = 1; i < snakeLinks.size(); i++) {
-//            oldX = snakeLinks.get(i).getX();
-//            oldY = snakeLinks.get(i).getY();
-//            snakeLinks.get(i).setPosition(newX, newY);
-//            if (newX == link0x && newY == link0y) {
-//                isAline = false;
-//                System.out.println("lost"); //todo
-//            }
-//            newX = oldX;
-//            newY = oldY;
-//        }
 
         Iterator<SnakeLink> iterator = snakeLinks.iterator();
         iterator.next();
@@ -76,35 +61,38 @@ public class Snake {
             oldX = link.getX();
             oldY = link.getY();
             if (link instanceof SnakeTail) {
-                if (food.getX() == link0x && food.getY() == link0y) {
-//            snakeLinks.add(new SnakeLink(newX, newY, C.ELEMENT_SIZE, C.ELEMENT_SIZE));
+                if (food.getX() == head0x && food.getY() == head0y) {
                     snakeLinks.add(snakeLinks.size() - 1, new SnakeLink(newX, newY, C.ELEMENT_SIZE, C.ELEMENT_SIZE));
                     food.reset(snakeLinks);
                     break;
+                } else {
+                    SnakeLink lastButOne = snakeLinks.get(snakeLinks.size() - 2);
+                    ((SnakeTail) link).setDirect(lastButOne.getX(), lastButOne.getY());
                 }
             }
             link.setPosition(newX, newY);
-            if (newX == link0x && newY == link0y) {
-                isAline = false;
+            if (newX == head0x && newY == head0y) {
+                isAlive = false;
+                head.setColor(Color.RED);
                 System.out.println("lost"); //todo
             }
             newX = oldX;
             newY = oldY;
         }
-
-//        if (food.getX() == link0x && food.getY() == link0y) {
-////            snakeLinks.add(new SnakeLink(newX, newY, C.ELEMENT_SIZE, C.ELEMENT_SIZE));
-//            snakeLinks.add(snakeLinks.size() - 1, new SnakeLink(newX, newY, C.ELEMENT_SIZE, C.ELEMENT_SIZE));
-//            food.reset(snakeLinks);
-//        }
-        return isAline;
+        return isAlive;
     }
 
     public void draw(Graphics g) {
-        for (SnakeLink link : snakeLinks) {
-            link.draw(g);
+        if (isVisible) {
+            for (SnakeLink link : snakeLinks) {
+                link.draw(g);
+            }
+            snakeLinks.get(0).draw(g);
         }
-        snakeLinks.get(0).draw(g);
+        if (!isAlive && blinkCount != 6) {
+            isVisible = !isVisible;
+            blinkCount++;
+        }
     }
 
     public void addComponent(SnakePanel snakePanel) {

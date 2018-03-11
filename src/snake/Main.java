@@ -23,8 +23,6 @@ public class Main {
 /*
 * TODO LIST:
 * - levels/types of the game = wall element
-* - head of the snake
-* - blink 3x after loosing
 * - design of snakes link
 * - collecting points
 * - counter of pints

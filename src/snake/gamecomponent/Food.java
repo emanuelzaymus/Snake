@@ -4,7 +4,6 @@ import snake.C;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -23,7 +22,6 @@ public class Food extends Element {
         g.fillOval(super.x * C.RESOLUTION + C.OFFSET, super.y * C.RESOLUTION + C.OFFSET, super.width, super.height);
     }
 
-//    public void reset(ArrayList<SnakeLink> snakeLinks) {
     public void reset(LinkedList<SnakeLink> snakeLinks) {
         int newX;
         int newY;

@@ -3,7 +3,7 @@ package snake.gamecomponent;
 import snake.C;
 import snake.Direction;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 public class SnakeTail extends SnakeLink {
 
@@ -11,10 +11,6 @@ public class SnakeTail extends SnakeLink {
 
     public SnakeTail(int x, int y, int width, int height, Direction direct) {
         super(x, y, width, height);
-        this.direct = direct;
-    }
-
-    public void setDirect(Direction direct) {
         this.direct = direct;
     }
 
@@ -38,4 +34,27 @@ public class SnakeTail extends SnakeLink {
                 break;
         }
     }
+
+    public void setDirect(int x, int y) {
+        x -= getX();
+        y -= getY();
+
+        if (x == 0 || y == 0)
+            return;
+
+        if (direct == Direction.RIGHT || direct == Direction.LEFT) {
+            if (y == -1 || y > 1) {
+                direct = Direction.UP;
+            } else { //if (y == 1 || y < -1) {
+                direct = Direction.DOWN;
+            }
+        } else { //if (direct == Direction.DOWN || direct == Direction.UP) {
+            if (x == -1 || x > 1) {
+                direct = Direction.LEFT;
+            } else { //if (x == 1 || x < -1) {
+                direct = Direction.RIGHT;
+            }
+        }
+    }
+
 }

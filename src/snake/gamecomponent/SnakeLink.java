@@ -2,7 +2,8 @@ package snake.gamecomponent;
 
 import snake.C;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class SnakeLink extends Element {
 
@@ -28,6 +29,10 @@ public class SnakeLink extends Element {
     @Override
     protected void setPosition(int x, int y) {
         super.setPosition(x, y);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
 }

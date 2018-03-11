@@ -1,9 +1,7 @@
 package snake.gamecomponent;
 
-import snake.C;
 import snake.SnakePanel;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
